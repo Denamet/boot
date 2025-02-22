@@ -16,28 +16,31 @@ with open(file_path, mode="r", encoding="utf-8") as file:
     next(reader)  # تخطي العنوان
     azkar_list = [row[0] for row in reader]
 
-# 🔹 إرسال ذكر واحد كل دقيقة
-for zikr in azkar_list:
-    message = f"📿 {zikr}"
+# 🔹 إرسال ذكر واحد كل دقيقة 
 
-    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-    params = {
-        "chat_id": CHANNEL_ID,
-        "text": message,
-        "parse_mode": "HTML"
-    }
+while True :
     
-    try :
-        response = requests.post(url, params=params)
+    for zikr in azkar_list:
+        message = f"📿 {zikr}"
 
-        if response.status_code == 200:
-            print(f"✅ تم إرسال الذكر: {zikr}")
-        else:
-            print(f"❌ فشل في إرسال الذكر: {response.text}")
+        url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+        params = {
+            "chat_id": CHANNEL_ID,
+            "text": message,
+            "parse_mode": "HTML"
+        }
+        
+        try :
+            response = requests.post(url, params=params)
 
-        # 🔹 الانتظار دقيقة واحدة قبل إرسال الذكر التالي
-        time.sleep(3)
-    
-    
-    except :
-        pass
+            if response.status_code == 200:
+                print(f"✅ تم إرسال الذكر: {zikr}")
+            else:
+                print(f"❌ فشل في إرسال الذكر: {response.text}")
+
+            # 🔹 الانتظار دقيقة واحدة قبل إرسال الذكر التالي
+            time.sleep(3)
+        
+        
+        except :
+            pass
